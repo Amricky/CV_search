@@ -1,0 +1,52 @@
+if __name__ == "__main__":
+
+    input_folder = "split_cvs"
+
+    passed_folder = "passed for manipulation"
+    flagged_folder = "flagged for manipulation"
+
+    # Create folders automatically if they don't exist
+    os.makedirs(passed_folder, exist_ok=True)
+    os.makedirs(flagged_folder, exist_ok=True)
+
+    # Go through every file inside split_cvs
+    for filename in os.listdir(input_folder):
+
+        if filename.lower().endswith(".pdf"):
+
+            pdf_path = os.path.join(input_folder, filename)
+
+            print(f"\nChecking: {filename}")
+
+            try:
+                result = detect_manipulation(pdf_path)
+
+                # If manipulation was detected
+                if result["flagged"]:
+
+                    destination = os.path.join(
+                        flagged_folder,
+                        filename
+                    )
+
+                    shutil.copy2(pdf_path, destination)
+
+                    print(
+                        f"FLAGGED: {filename} "
+                        f"- {len(result['flags'])} flag(s) found"
+                    )
+
+                # If CV passed manipulation detection
+                else:
+
+                    destination = os.path.join(
+                        passed_folder,
+                        filename
+                    )
+
+                    shutil.copy2(pdf_path, destination)
+
+                    print(f"PASSED: {filename}")
+
+            except Exception as e:
+                print(f"ERROR processing {filename}: {e}")
