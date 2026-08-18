@@ -48,4 +48,13 @@ public String chatWithCandidate(UUID candidateId, String message) {
 }
 
 
+UUID documentId = candidate.getCvDocumentId();
+
+if (documentId == null) {
+    throw new IllegalStateException(
+        "Candidate does not have a CV document attached"
+    );
+}
+
+
 
