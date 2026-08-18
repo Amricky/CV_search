@@ -31,3 +31,45 @@ def country_flagging(candidate, passed_country="egypt"):
             "location": location,
             "reason": f"Candidate does not match required country: {passed_country}"
         }
+
+
+
+testing
+if __name__ == "__main__":
+
+    class PersonalInfo:
+        def __init__(self, nationality=None, location=None):
+            self.nationality = nationality
+            self.location = location
+
+    class Candidate:
+        def __init__(self, personal_info):
+            self.personal_info = personal_info
+
+
+    # TEST 1 - SHOULD PASS
+    candidate1 = Candidate(
+        PersonalInfo(
+            nationality="Egyptian",
+            location="Cairo, Egypt"
+        )
+    )
+
+    result1 = country_flagging(candidate1)
+
+    print("\nTEST 1")
+    print(result1)
+
+
+    # TEST 2 - SHOULD BE FLAGGED
+    candidate2 = Candidate(
+        PersonalInfo(
+            nationality="American",
+            location="Miami, FL"
+        )
+    )
+
+    result2 = country_flagging(candidate2)
+
+    print("\nTEST 2")
+    print(result2)
