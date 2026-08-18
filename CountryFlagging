@@ -1,0 +1,33 @@
+def country_flagging(candidate, passed_country="egypt"):
+
+    # Get personal information from candidate
+    personal_info = candidate.personal_info
+
+    # Safely get nationality and location
+    nationality = getattr(personal_info, "nationality", None)
+    location = getattr(personal_info, "location", None)
+
+    # Handle None values and normalize text
+    nationality = (nationality or "").strip().lower()
+    location = (location or "").strip().lower()
+    passed_country = passed_country.strip().lower()
+
+    # Check if candidate matches the required country
+    if passed_country in nationality or passed_country in location:
+
+        return {
+            "passed": True,
+            "status": "passed",
+            "nationality": nationality,
+            "location": location
+        }
+
+    else:
+
+        return {
+            "passed": False,
+            "status": "flagged",
+            "nationality": nationality,
+            "location": location,
+            "reason": f"Candidate does not match required country: {passed_country}"
+        }
