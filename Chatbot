@@ -48,13 +48,21 @@ public String chatWithCandidate(UUID candidateId, String message) {
 }
 
 
-UUID documentId = candidate.getCvDocumentId();
 
-if (documentId == null) {
+
+// 2. Get the CV document ID stored on the candidate
+String cvDocumentId = candidate.getCvDocumentId();
+
+if (cvDocumentId == null || cvDocumentId.isBlank()) {
     throw new IllegalStateException(
-        "Candidate does not have a CV document attached"
+            "Candidate does not have a CV document attached"
     );
 }
+
+// 3. Convert the String ID to UUID
+UUID documentId = UUID.fromString(cvDocumentId);
+
+
 
 
 
