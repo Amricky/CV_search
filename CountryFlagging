@@ -35,6 +35,9 @@ def country_flagging(candidate, passed_country="egypt"):
 
 
 testing
+from services.countryFlaggings import country_flagging
+
+
 if __name__ == "__main__":
 
     class PersonalInfo:
@@ -57,11 +60,11 @@ if __name__ == "__main__":
 
     result1 = country_flagging(candidate1)
 
-    print("\nTEST 1")
+    print("\nTEST 1 - SHOULD PASS")
     print(result1)
 
 
-    # TEST 2 - SHOULD BE FLAGGED
+    # TEST 2 - SHOULD FLAG
     candidate2 = Candidate(
         PersonalInfo(
             nationality="American",
@@ -71,5 +74,33 @@ if __name__ == "__main__":
 
     result2 = country_flagging(candidate2)
 
-    print("\nTEST 2")
+    print("\nTEST 2 - SHOULD FLAG")
     print(result2)
+
+
+    # TEST 3 - LOCATION MATCHES, NATIONALITY MISSING
+    candidate3 = Candidate(
+        PersonalInfo(
+            nationality=None,
+            location="Cairo, Egypt"
+        )
+    )
+
+    result3 = country_flagging(candidate3)
+
+    print("\nTEST 3 - SHOULD PASS")
+    print(result3)
+
+
+    # TEST 4 - BOTH VALUES MISSING
+    candidate4 = Candidate(
+        PersonalInfo(
+            nationality=None,
+            location=None
+        )
+    )
+
+    result4 = country_flagging(candidate4)
+
+    print("\nTEST 4 - SHOULD FLAG")
+    print(result4)
